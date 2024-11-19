@@ -17,11 +17,28 @@ public class Concesionario {
     public double getFacturacionLocal() {return facturacionLocal;}
     public void setFacturacionLocal(double facturacionLocal) {this.facturacionLocal = facturacionLocal;}
 
-    public void adquirirCoche(){
-
+    public ArrayList<Coche> getListadoCoches() {
+        return listadoCoches;
+    }
+    public void setListadoCoches(ArrayList<Coche> listadoCoches) {
+        this.listadoCoches = listadoCoches;
     }
 
-    public void venderCoche(){
+    public void adquirirCoche(Coche coche){
+        if(listadoCoches.size() < tamanyo){
+            listadoCoches.add(coche);
+        }else{
+            System.out.println("Concesionario lleno, no se puede introducir el coche.");
+        }
+    }
 
+    public void venderCoche(String matricula){
+        for(Coche coche : listadoCoches){
+            if(coche.getMatricula().equalsIgnoreCase(matricula)){
+                listadoCoches.remove(coche);
+                facturacionLocal += coche.getPrecio();
+                break;
+            }
+        }
     }
 }

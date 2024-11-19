@@ -24,11 +24,21 @@ public class Empresa {
         this.grupo = grupo;
     }
 
-    public void crearSede(){
+    public Concesionario getConcesionario(String ciudad){
+        return grupo.get(ciudad);
+    }
 
+    public void crearSede(String ciudad, int tamanyo){
+        if(grupo.containsKey(ciudad)){
+            System.out.println("Ya existe esa sede.");
+        }else{
+            grupo.put(ciudad, new Concesionario(tamanyo));
+        }
     }
 
     public void facturacionTotal(){
-
+        for(Concesionario concesionario : grupo.values()){
+            facturacionEmpresa += concesionario.getFacturacionLocal();
+        }
     }
 }

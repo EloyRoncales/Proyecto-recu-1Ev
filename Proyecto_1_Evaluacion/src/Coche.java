@@ -4,15 +4,15 @@ public class Coche {
     private String matricula;
     private int anyo;
     private double precio;
-    private int Kms;
+    private int kms;
 
-    public Coche(String marca, String modelo, String matricula, int anyo, double precio, int Kms) {
+    public Coche(String marca, String modelo, String matricula, int anyo, double precio, int kms) {
         this.marca = marca;
         this.modelo = modelo;
         this.matricula = matricula;
         this.anyo = anyo;
         this.precio = precio;
-        this.Kms = Kms;
+        this.kms = kms;
     }
 
     // Getters and setters
@@ -32,10 +32,20 @@ public class Coche {
     public double getPrecio() {return precio;}
     public void setPrecio(double precio) {this.precio = precio;}
 
-    public int getKms() {return Kms;}
-    public void setKms(int kms) {Kms = kms;}
+    public int getKms() {return kms;}
+    public void setKms(int kms) {kms = kms;}
 
-    public double Descuento(){
-        return 0;
+    @Override
+    public String toString() {
+        return String.format("  •" + marca + " " + modelo + "\n  •Kms: " + kms + "\n  •Precio: " + precio + " € \n  •Año: " + anyo + "\n  •Matrícula: " + matricula
+                + "\n--------------------------------------------------------");
+    }
+
+    public double Descuento(int porcentaje){
+        if (porcentaje < 1 || porcentaje > 50) {
+            System.out.println("ERROR: Debe especificar un valor entre 1 y 50");
+        }
+        this.precio -= this.precio * porcentaje / 100;
+        return this.precio;
     }
 }

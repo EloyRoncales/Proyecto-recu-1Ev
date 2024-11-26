@@ -37,6 +37,7 @@ public class Empresa {
     }
 
     public void facturacionTotal(){
+        facturacionEmpresa = 0;
         for(Concesionario concesionario : grupo.values()){
             facturacionEmpresa += concesionario.getFacturacionLocal();
         }

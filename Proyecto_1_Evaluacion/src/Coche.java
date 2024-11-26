@@ -41,11 +41,12 @@ public class Coche {
                 + "\n--------------------------------------------------------");
     }
 
-    public double Descuento(int porcentaje){
+    public double Descuento(int porcentaje) {
         if (porcentaje < 1 || porcentaje > 50) {
             System.out.println("ERROR: Debe especificar un valor entre 1 y 50");
         }
         this.precio -= this.precio * porcentaje / 100;
         return this.precio;
     }
+
 }

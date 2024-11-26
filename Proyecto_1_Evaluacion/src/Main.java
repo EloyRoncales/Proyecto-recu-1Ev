@@ -4,84 +4,115 @@ public class Main {
         cargarDatosIniciales(empresa);
         java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-        System.out.println("Menú Principal:");
-        System.out.println("1- Crear nueva sede");
-        System.out.println("2- Introducir coche en una sede");
-        System.out.println("3- Vender coche");
-        System.out.println("4- Buscar coches por marca");
-        System.out.println("5- Buscar coches por modelo");
-        System.out.println("6- Mostrar listado de coches por concesionario");
-        System.out.println("7- Salir");
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("Menú Principal:");
+            System.out.println("1- Crear nueva sede");
+            System.out.println("2- Introducir coche en una sede");
+            System.out.println("3- Vender coche");
+            System.out.println("4- Buscar coches por marca");
+            System.out.println("5- Buscar coches por modelo");
+            System.out.println("6- Mostrar listado de coches por concesionario");
+            System.out.println("7- Salir");
 
-        System.out.print("Seleccione una opción: ");
-        int opcion = scanner.nextInt();
+            System.out.print("Seleccione una opción: ");
+            int opcion = scanner.nextInt();
 
-        switch (opcion) {
-            case 1:
-                System.out.print("Nombre de la ciudad: ");
-                String ciudad = scanner.next();
-                System.out.print("Capacidad máxima: ");
-                int tamanyo = scanner.nextInt();
-                empresa.crearSede(ciudad, tamanyo);
-                break;
+            switch (opcion) {
+                case 1:
+                    System.out.print("Nombre de la ciudad: ");
+                    String ciudad = scanner.next();
+                    System.out.print("Capacidad máxima: ");
+                    int tamanyo = scanner.nextInt();
+                    empresa.crearSede(ciudad, tamanyo);
+                    System.out.println("Sede creada con exito en " + ciudad);
+                    break;
 
-            case 2:
-                System.out.print("Marca: ");
-                String marca = scanner.next();
-                System.out.print("Modelo: ");
-                String modelo = scanner.next();
-                System.out.print("Matrícula: ");
-                String matricula = scanner.next();
-                System.out.print("Año: ");
-                int anyo = scanner.nextInt();
-                System.out.print("Precio: ");
-                double precio = scanner.nextDouble();
-                System.out.print("Kilómetros: ");
-                int kms = scanner.nextInt();
-                System.out.print("Ciudad del concesionario: ");
-                ciudad = scanner.next();
+                case 2:
+                    System.out.print("Marca: ");
+                    String marca = scanner.next();
+                    System.out.print("Modelo: ");
+                    String modelo = scanner.next();
+                    System.out.print("Matrícula: ");
+                    String matricula = scanner.next();
+                    System.out.print("Año: ");
+                    int anyo = scanner.nextInt();
+                    System.out.print("Precio: ");
+                    double precio = scanner.nextDouble();
+                    System.out.print("Kilómetros: ");
+                    int kms = scanner.nextInt();
+                    System.out.print("Ciudad del concesionario: ");
+                    ciudad = scanner.next();
 
-                Concesionario concesionario = empresa.getConcesionario(ciudad);
-                if (concesionario != null) {
-                    concesionario.adquirirCoche(new Coche(marca, modelo, matricula, anyo, precio, kms));
-                } else {
-                    System.out.println("ERROR: No existe un concesionario en " + ciudad);
-                }
-                break;
+                    Concesionario concesionario = empresa.getConcesionario(ciudad);
+                    if (concesionario != null) {
+                        concesionario.adquirirCoche(new Coche(marca, modelo, matricula, anyo, precio, kms));
+                        System.out.println("Coche añadido con exito en " + ciudad);
+                    } else {
+                        System.out.println("ERROR: No existe un concesionario en " + ciudad);
+                    }
+                    break;
 
-            case 3:
-                System.out.print("Ciudad del concesionario: ");
-                ciudad = scanner.next();
-                System.out.print("Matrícula del coche a vender: ");
-                matricula = scanner.next();
+                case 3:
+                    System.out.print("Ciudad del concesionario: ");
+                    ciudad = scanner.next();
+                    System.out.print("Matrícula del coche a vender: ");
+                    matricula = scanner.next();
 
-                concesionario = empresa.getConcesionario(ciudad);
-                if (concesionario != null) {
-                    concesionario.venderCoche(matricula);
-                } else {
-                    System.out.println("ERROR: No existe un concesionario en " + ciudad);
-                }
-                break;
+                    concesionario = empresa.getConcesionario(ciudad);
+                    if (concesionario != null) {
+                        concesionario.venderCoche(matricula);
+                        System.out.println("Coche vendido con exito de " + ciudad);
+                    } else {
+                        System.out.println("ERROR: No existe un concesionario en " + ciudad);
+                    }
+                    break;
 
-            case 4:
+                case 4:
+                    System.out.print("Marca del coche a buscar: ");
+                    marca = scanner.next();
+                    for (Concesionario c : empresa.getGrupo().values()) {
+                        for (Coche coche : c.getListadoCoches()) {
+                            if (coche.getMarca().equalsIgnoreCase(marca)) {
+                                System.out.println(coche);
+                            }
+                        }
+                    }
+                    break;
 
-                break;
+                case 5:
+                    System.out.print("Modelo del coche a buscar: ");
+                    modelo = scanner.next();
+                    for (Concesionario c : empresa.getGrupo().values()) {
+                        for (Coche coche : c.getListadoCoches()) {
+                            if (coche.getModelo().equalsIgnoreCase(modelo)) {
+                                System.out.println(coche);
+                            }
+                        }
+                    }
+                    break;
 
-            case 5:
+                case 6:
+                    System.out.print("Ciudad del concesionario: ");
+                    ciudad = scanner.next();
+                    Concesionario c = empresa.getConcesionario(ciudad);
+                    if (c != null) {
+                        for (Coche coche : c.getListadoCoches()) {
+                            System.out.println(coche);
+                        }
+                    } else {
+                        System.out.println("No existe un concesionario en " + ciudad);
+                    }
+                    break;
 
-                break;
+                case 7:
+                    continuar = false;
+                    break;
 
-            case 6:
-
-                break;
-
-            case 7:
-
-                break;
-
-            default:
-                System.out.println("Opción no válida.");
-                break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
         }
     }
 
